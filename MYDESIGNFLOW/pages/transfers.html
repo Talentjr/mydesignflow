@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transfers - Banking App</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      .transfers-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+
+        color: white;
+
+        padding: 20px;
+
+        text-align: center;
+
+        font-size: 24px;
+
+        font-weight: 600;
+
+        border-radius: 0 0 15px 15px;
+      }
+
+      .search-box {
+        padding: 15px;
+
+        background: white;
+
+        border-bottom: 1px solid #eee;
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 10;
+      }
+
+      .search-input {
+        width: 100%;
+
+        padding: 12px 15px;
+
+        border: 1px solid #ddd;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+      }
+
+      .transfer-option {
+        padding: 15px;
+
+        border-bottom: 1px solid #eee;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+      }
+
+      .transfer-option-left {
+        display: flex;
+
+        align-items: center;
+      }
+
+      .option-checkbox {
+        margin-right: 15px;
+
+        width: 20px;
+
+        height: 20px;
+      }
+
+      .option-name {
+        font-size: 16px;
+
+        font-weight: 500;
+      }
+
+      .sub-option {
+        padding: 12px 15px 12px 50px;
+
+        border-bottom: 1px solid #eee;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        background: #f9f9f9;
+      }
+
+      .chevron-right {
+        color: #999;
+      }
+
+      .beneficiary-section {
+        padding: 15px;
+      }
+
+      .beneficiary-tabs {
+        display: flex;
+
+        border-bottom: 1px solid #ddd;
+
+        margin-bottom: 15px;
+
+        overflow-x: auto;
+      }
+
+      .beneficiary-tab {
+        padding: 10px 15px;
+
+        font-size: 14px;
+
+        cursor: pointer;
+
+        white-space: nowrap;
+      }
+
+      .beneficiary-tab.active {
+        border-bottom: 2px solid #2b77d8;
+
+        color: #2b77d8;
+
+        font-weight: 500;
+      }
+
+      .beneficiary-item {
+        padding: 12px 0;
+
+        border-bottom: 1px solid #eee;
+      }
+
+      .beneficiary-initial {
+        width: 40px;
+
+        height: 40px;
+
+        background: #e8f0fe;
+
+        border-radius: 20px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-weight: 600;
+
+        color: #2b77d8;
+
+        margin-right: 15px;
+      }
+
+      .beneficiary-content {
+        display: flex;
+
+        align-items: center;
+      }
+
+      .beneficiary-details {
+        flex: 1;
+      }
+
+      .beneficiary-name {
+        font-weight: 500;
+
+        margin-bottom: 3px;
+      }
+
+      .beneficiary-info {
+        font-size: 13px;
+
+        color: #888;
+      }
+
+      .back-button {
+        position: absolute;
+
+        top: 25px;
+
+        left: 15px;
+
+        color: white;
+
+        font-size: 20px;
+
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="transfers-header">
+        <div class="back-button" onclick="location.href='../homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div>Transfers</div>
+      </div>
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Name, phone or account number..."
+        />
+      </div>
+      <div class="section">
+        <h3 class="section-title">Create new</h3>
+        <div class="transfer-option" onclick="location.href='transferservice.html?type=account'">
+    <div class="transfer-option-left">
+        <input type="checkbox" class="option-checkbox" checked>
+        <div class="option-name">Account transfer</div>
+    </div>
+    <div class="chevron-right"><i class="fas fa-chevron-right"></i></div>
+</div>
+
+<div class="sub-option" onclick="location.href='transferservice.html?type=fx'">
+    <div class="option-name">FX transfer to other banks</div>
+    <div class="chevron-right"><i class="fas fa-chevron-right"></i></div>
+</div>
+
+<div class="transfer-option" onclick="location.href='transferservice.html?type=sales'">
+    <div class="transfer-option-left">
+        <input type="checkbox" class="option-checkbox">
+        <div class="option-name">FX Sales</div>
+    </div>
+    <div class="chevron-right"><i class="fas fa-chevron-right"></i></div>
+</div>
+      </div>
+      <div class="beneficiary-section">
+        <h3 class="section-title">Beneficiaries</h3>
+        <div class="beneficiary-tabs">
+          <div class="beneficiary-tab active">All</div>
+          <div class="beneficiary-tab">Saved</div>
+          <div class="beneficiary-tab">Contacts</div>
+          <div class="beneficiary-tab">FX transfer</div>
+        </div>
+        <div class="beneficiary-item">
+          <div class="beneficiary-content">
+            <div class="beneficiary-initial">A</div>
+            <div class="beneficiary-details">
+              <div class="beneficiary-name">Abdullahi Afeez Abayomi</div>
+              <div class="beneficiary-info">Gtbank • 0945735039 • NGN</div>
+            </div>
+          </div>
+        </div>
+        <div class="beneficiary-item">
+          <div class="beneficiary-content">
+            <div class="beneficiary-initial">A</div>
+            <div class="beneficiary-details">
+              <div class="beneficiary-name">Abiona Oluwatobi Esther</div>
+              <div class="beneficiary-info">Gtbank • 0336009769 • NGN</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="location.href='../homepage.html'">
+          <div class="nav-icon"><i class="fas fa-home"></i></div>
+          <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="location.href='digibot.html'">
+          <div class="nav-icon"><i class="fas fa-robot"></i></div>
+          <div>DigiBot</div>
+        </div>
+        <div class="nav-item" onclick="location.href='payments.html'">
+          <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+          <div>Payments</div>
+        </div>
+        <div class="nav-item active">
+          <div class="nav-icon"><i class="fas fa-exchange-alt"></i></div>
+          <div>Transfers</div>
+        </div>
+        <div class="nav-item" onclick="location.href='finances.html'">
+          <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+          <div>Finances</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

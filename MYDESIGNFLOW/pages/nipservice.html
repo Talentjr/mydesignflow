@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transfer Details - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .transfer-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 20px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .transfer-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 10px 0 5px;
+      }
+
+      .content-area {
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 70px;
+      }
+
+      .form-container {
+        padding: 25px 20px;
+      }
+
+      .beneficiary-details {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .beneficiary-name {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #1a4f8e;
+      }
+
+      .beneficiary-info {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 3px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #444;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .input-field:focus {
+        border-color: #2b77d8;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(43, 119, 216, 0.2);
+      }
+
+      .input-field.error {
+        border-color: #e74c3c;
+      }
+
+      .error-message {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .send-btn {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 10px;
+      }
+
+      .send-btn:active {
+        background: #1a5bb5;
+      }
+
+      /* Confirmation Screen */
+      .confirmation-screen {
+        display: none;
+        padding: 25px 20px;
+        text-align: center;
+      }
+
+      .confirmation-icon {
+        font-size: 60px;
+        color: #2b77d8;
+        margin: 15px 0;
+      }
+
+      .confirmation-title {
+        font-size: 22px;
+        font-weight: 600;
+        color: #1a4f8e;
+        margin-bottom: 15px;
+      }
+
+      .transfer-summary {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: left;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .summary-item:last-child {
+        border-bottom: none;
+      }
+
+      .summary-label {
+        color: #666;
+      }
+
+      .summary-value {
+        font-weight: 600;
+        text-align: right;
+        max-width: 60%;
+        word-break: break-word;
+      }
+
+      .amount-value {
+        font-size: 20px;
+        color: #1a4f8e;
+        font-weight: 700;
+      }
+
+      .confirm-btn {
+        background: #27ae60;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(39, 174, 96, 0.2);
+      }
+
+      .confirm-btn:hover {
+        background: #219653;
+      }
+
+      .edit-btn {
+        background: #e8f0fe;
+        color: #2b77d8;
+        border: none;
+        padding: 14px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 10px;
+      }
+
+      .edit-btn:hover {
+        background: #d4e3fc;
+      }
+
+      /* Bottom Navigation */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        padding: 12px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        border-top: 1px solid #eee;
+        z-index: 200;
+      }
+
+      .nav-item {
+        text-align: center;
+        font-size: 13px;
+        color: #666;
+        cursor: pointer;
+        flex: 1;
+      }
+
+      .nav-item.active {
+        color: #2b77d8;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+
+      /* Improved spacing for better visibility */
+      .spacer {
+        height: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="transfer-header">
+        <div class="back-button" id="backButton">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="transfer-title">Transfer Details</h1>
+        <p>Confirm and send money</p>
+      </div>
+
+      <div class="content-area">
+        <div class="form-container" id="formContainer">
+          <div class="beneficiary-details">
+            <div class="beneficiary-name" id="beneficiaryName">John Doe</div>
+            <div class="beneficiary-info" id="beneficiaryAccount">
+              0123456789
+            </div>
+            <div class="beneficiary-info" id="beneficiaryBank">GTBank</div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Amount (₦)</label>
+            <input
+              type="text"
+              class="input-field"
+              id="amount"
+              placeholder="Enter amount"
+              inputmode="numeric"
+            />
+            <div class="error-message" id="amountError">
+              Please enter a valid amount
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Narration (Optional)</label>
+            <input
+              type="text"
+              class="input-field"
+              id="narration"
+              placeholder="What's this transfer for?"
+            />
+          </div>
+
+          <div class="spacer"></div>
+
+          <button class="send-btn" id="sendButton">SEND</button>
+        </div>
+
+        <!-- Confirmation Screen -->
+        <div class="confirmation-screen" id="confirmationScreen">
+          <div class="confirmation-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h2 class="confirmation-title">Confirm Transfer</h2>
+
+          <div class="transfer-summary">
+            <div class="summary-item">
+              <span class="summary-label">Recipient:</span>
+              <span class="summary-value" id="confirmName">John Doe</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Account Number:</span>
+              <span class="summary-value" id="confirmAccount">0123456789</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Bank:</span>
+              <span class="summary-value" id="confirmBank">GTBank</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Amount:</span>
+              <span class="summary-value amount-value" id="confirmAmount"
+                >₦ 0</span
+              >
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Narration:</span>
+              <span class="summary-value" id="confirmNarration">-</span>
+            </div>
+          </div>
+
+          <button
+            class="confirm-btn"
+            id="confirmButton"
+            onclick="location.href='pinverify.html'"
+          >
+            CONFIRM TRANSFER
+          </button>
+
+          <button class="edit-btn" id="editButton">EDIT DETAILS</button>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="location.href='../homepage.html'">
+          <div class="nav-icon"><i class="fas fa-home"></i></div>
+          <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="location.href='digibot.html'">
+          <div class="nav-icon"><i class="fas fa-robot"></i></div>
+          <div>DigiBot</div>
+        </div>
+        <div class="nav-item" onclick="location.href='payments.html'">
+          <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+          <div>Payments</div>
+        </div>
+        <div class="nav-item active">
+          <div class="nav-icon"><i class="fas fa-exchange-alt"></i></div>
+          <div>Transfers</div>
+        </div>
+        <div class="nav-item" onclick="location.href='finances.html'">
+          <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+          <div>Finances</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const account = urlParams.get("account");
+        const name = urlParams.get("name");
+        const bank = urlParams.get("bank");
+
+        // Get DOM elements
+        const formContainer = document.getElementById("formContainer");
+        const confirmationScreen =
+          document.getElementById("confirmationScreen");
+        const backButton = document.getElementById("backButton");
+        const sendButton = document.getElementById("sendButton");
+        const amountInput = document.getElementById("amount");
+        const narrationInput = document.getElementById("narration");
+        const editButton = document.getElementById("editButton");
+        const confirmButton = document.getElementById("confirmButton");
+
+        // Update beneficiary details
+        document.getElementById("beneficiaryName").textContent =
+          name || "John Doe";
+        document.getElementById("beneficiaryAccount").textContent =
+          account || "0123456789";
+        document.getElementById("beneficiaryBank").textContent =
+          bank || "GTBank";
+
+        // Set back button behavior
+        backButton.onclick = function () {
+          if (confirmationScreen.style.display === "block") {
+            // If on confirmation screen, go back to form
+            confirmationScreen.style.display = "none";
+            formContainer.style.display = "block";
+            document.querySelector(".transfer-title").textContent =
+              "Transfer Details";
+            document.querySelector(".transfer-header p").textContent =
+              "Confirm and send money";
+          } else {
+            // If on form, go back to previous page
+            location.href = "transferservice.html";
+          }
+        };
+
+        // Only allow numbers in amount field
+        amountInput.addEventListener("input", function (e) {
+          e.target.value = e.target.value.replace(/\D/g, "");
+          validateForm();
+        });
+
+        // Send button action
+        sendButton.addEventListener("click", function () {
+          const amount = amountInput.value;
+          const narration = narrationInput.value;
+
+          if (!validateForm()) {
+            return;
+          }
+
+          // Show confirmation screen
+          showConfirmation(amount, narration);
+        });
+
+        // Allow Enter key to send
+        amountInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            sendButton.click();
+          }
+        });
+
+        // Edit button action
+        editButton.addEventListener("click", function () {
+          confirmationScreen.style.display = "none";
+          formContainer.style.display = "block";
+          document.querySelector(".transfer-title").textContent =
+            "Transfer Details";
+          document.querySelector(".transfer-header p").textContent =
+            "Confirm and send money";
+        });
+
+        // Form validation
+        function validateForm() {
+          const amount = amountInput.value;
+          const amountError = document.getElementById("amountError");
+          let isValid = true;
+
+          // Validate amount
+          if (!amount || amount <= 0) {
+            amountInput.classList.add("error");
+            amountError.style.display = "block";
+            isValid = false;
+          } else {
+            amountInput.classList.remove("error");
+            amountError.style.display = "none";
+          }
+
+          // Enable/disable send button
+          sendButton.disabled = !isValid;
+          sendButton.style.opacity = isValid ? "1" : "0.7";
+
+          return isValid;
+        }
+
+        // Show confirmation screen
+        function showConfirmation(amount, narration) {
+          // Update confirmation details
+          document.getElementById("confirmName").textContent =
+            name || "John Doe";
+          document.getElementById("confirmAccount").textContent =
+            account || "0123456789";
+          document.getElementById("confirmBank").textContent = bank || "GTBank";
+          document.getElementById("confirmAmount").textContent =
+            "₦ " + parseInt(amount).toLocaleString();
+          document.getElementById("confirmNarration").textContent =
+            narration || "-";
+
+          // Switch to confirmation screen
+          formContainer.style.display = "none";
+          confirmationScreen.style.display = "block";
+          document.querySelector(".transfer-title").textContent =
+            "Confirm Transfer";
+          document.querySelector(".transfer-header p").textContent =
+            "Review details before proceeding";
+        }
+
+        // Initialize form validation
+        validateForm();
+      });
+    </script>
+  </body>
+</html>

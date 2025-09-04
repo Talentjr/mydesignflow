@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banking Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 20px;
+        position: relative;
+      }
+
+      .logout-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .greeting {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 40px 0 15px;
+      }
+
+      .account-selector {
+        margin-top: 15px;
+      }
+
+      .selected-account {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 12px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .account-visibility {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .account-number {
+        font-weight: 600;
+      }
+
+      .account-visibility-toggle {
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .dropdown-icon {
+        font-size: 14px;
+      }
+
+      .accounts-dropdown {
+        display: none;
+        background: white;
+        border-radius: 10px;
+        margin-top: 5px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .accounts-dropdown.show {
+        display: block;
+      }
+
+      .account-item {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+      }
+
+      .account-item:last-child {
+        border-bottom: none;
+      }
+
+      .account-item:hover {
+        background: #f8f9fa;
+      }
+
+      .account-type {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+      }
+
+      .main-content {
+        padding: 20px;
+        padding-bottom: 80px;
+      }
+
+      .section {
+        margin-bottom: 25px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a4f8e;
+        margin-bottom: 15px;
+      }
+
+      .balance-card {
+        background: linear-gradient(135deg, #2b77d8, #1a4f8e);
+        color: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .balance-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .balance-title {
+        font-size: 16px;
+        opacity: 0.9;
+      }
+
+      .visibility-toggle {
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .balance-amount {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .transfer-btn {
+        background: white;
+        color: #2b77d8;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+      }
+
+      .transfer-btn:active {
+        background: #f0f4f8;
+      }
+
+      .shortcuts {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+      }
+
+      .shortcut-item {
+        background: white;
+        border-radius: 12px;
+        padding: 15px 10px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .shortcut-item:active {
+        transform: scale(0.95);
+      }
+
+      .shortcut-icon {
+        width: 40px;
+        height: 40px;
+        background: #e8f0fe;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+        color: #2b77d8;
+        font-size: 18px;
+      }
+
+      .shortcut-text {
+        font-size: 12px;
+        color: #555;
+        font-weight: 500;
+      }
+
+      /* Additional styles for new elements */
+      .account-visibility {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .account-visibility-toggle {
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .quick-action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .quick-action-box:active {
+        transform: scale(0.98);
+      }
+
+      .quick-action-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .quick-action-icon {
+        width: 40px;
+        height: 40px;
+        background: #e8f0fe;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2b77d8;
+        font-size: 18px;
+        margin-right: 15px;
+      }
+
+      .quick-action-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        flex: 1;
+      }
+
+      .quick-action-amount {
+        font-size: 18px;
+        font-weight: 700;
+        color: #222;
+      }
+
+      .quick-action-subtitle {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+      }
+
+      .chevron-right {
+        color: #999;
+        font-size: 14px;
+      }
+
+      /* Bottom Navigation */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        padding: 12px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        border-top: 1px solid #eee;
+        z-index: 200;
+      }
+
+      .nav-item {
+        text-align: center;
+        font-size: 13px;
+        color: #666;
+        cursor: pointer;
+        flex: 1;
+      }
+
+      .nav-item.active {
+        color: #2b77d8;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="main-header">
+        <div class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </div>
+
+        <h1 class="greeting">Hello!</h1>
+        <div class="account-selector">
+          <div class="selected-account" id="accountSelector">
+            <div class="account-visibility">
+              <span class="account-number">0715522980</span>
+              <span
+                class="account-visibility-toggle"
+                id="accountVisibilityToggle"
+              >
+                <i class="fas fa-eye"></i>
+              </span>
+            </div>
+            <span class="dropdown-icon"
+              ><i class="fas fa-chevron-down"></i
+            ></span>
+          </div>
+          <div class="accounts-dropdown" id="accountsDropdown">
+            <!-- This will be populated dynamically -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Balance Section -->
+        <div class="section">
+          <h2 class="section-title">Book balance</h2>
+          <div class="balance-card">
+            <div class="balance-header">
+              <div class="balance-title">Fund account</div>
+              <div class="visibility-toggle" id="visibilityToggle">
+                <i class="fas fa-eye"></i>
+              </div>
+            </div>
+            <div class="balance-amount" id="balanceAmount">₦ 124,580.75</div>
+            <button
+              class="transfer-btn"
+              onclick="location.href='pages/transfers.html'"
+            >
+              Transfer
+            </button>
+          </div>
+        </div>
+
+        <!-- Shortcuts Section -->
+        <div class="section">
+          <h2 class="section-title">Shortcuts</h2>
+          <div class="shortcuts">
+            <div
+              class="shortcut-item"
+              onclick="location.href='pages/nearme.html'"
+            >
+              <div class="shortcut-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="shortcut-text">Near me</div>
+            </div>
+            <div
+              class="shortcut-item"
+              onclick="location.href='pages/buydata.html'"
+            >
+              <div class="shortcut-icon"><i class="fas fa-database"></i></div>
+              <div class="shortcut-text">Buy data</div>
+            </div>
+            <div
+              class="shortcut-item"
+              onclick="location.href='pages/buyairtime.html'"
+            >
+              <div class="shortcut-icon"><i class="fas fa-mobile-alt"></i></div>
+              <div class="shortcut-text">Buy airtime</div>
+            </div>
+            <div
+              class="shortcut-item"
+              onclick="location.href='pages/transfers.html'"
+            >
+              <div class="shortcut-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <div class="shortcut-text">FX Sales</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Action Boxes -->
+        <div class="section">
+          <h2 class="section-title">Quick Access</h2>
+
+          <!-- Transaction History Box -->
+          <div
+            class="quick-action-box"
+            onclick="location.href='pages/finances.html'"
+          >
+            <div class="quick-action-header">
+              <div class="quick-action-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <div class="quick-action-title">Transaction History</div>
+              <div class="chevron-right">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            <div class="quick-action-subtitle">
+              View your recent transactions
+            </div>
+          </div>
+
+          <!-- Investment Box -->
+          <div
+            class="quick-action-box"
+            onclick="location.href='pages/finances.html'"
+          >
+            <div class="quick-action-header">
+              <div class="quick-action-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="quick-action-title">Investment</div>
+              <div class="chevron-right">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            <div class="quick-action-amount">₦ 89,430.20</div>
+            <div class="quick-action-subtitle">2 active funds</div>
+          </div>
+
+          <!-- Pension Box -->
+          <div
+            class="quick-action-box"
+            onclick="location.href='pages/finances.html'"
+          >
+            <div class="quick-action-header">
+              <div class="quick-action-icon">
+                <i class="fas fa-piggy-bank"></i>
+              </div>
+              <div class="quick-action-title">Pension</div>
+              <div class="chevron-right">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            <div class="quick-action-amount">₦ 452,120.80</div>
+            <div class="quick-action-subtitle">RSA FUND II</div>
+          </div>
+
+          <!-- Loan Request Box -->
+          <div
+            class="quick-action-box"
+            onclick="location.href='pages/finances.html'"
+          >
+            <div class="quick-action-header">
+              <div class="quick-action-icon">
+                <i class="fas fa-hand-holding-usd"></i>
+              </div>
+              <div class="quick-action-title">Loan Request</div>
+              <div class="chevron-right">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            <div class="quick-action-subtitle">Apply for quick loans</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <div class="nav-item active">
+          <div class="nav-icon"><i class="fas fa-home"></i></div>
+          <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="location.href='pages/digibot.html'">
+          <div class="nav-icon"><i class="fas fa-robot"></i></div>
+          <div>DigiBot</div>
+        </div>
+        <div class="nav-item" onclick="location.href='pages/payments.html'">
+          <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+          <div>Payments</div>
+        </div>
+        <div class="nav-item" onclick="location.href='pages/transfers.html'">
+          <div class="nav-icon"><i class="fas fa-exchange-alt"></i></div>
+          <div>Transfers</div>
+        </div>
+        <div class="nav-item" onclick="location.href='pages/finances.html'">
+          <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+          <div>Finances</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          // Check if user is logged in
+          const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+          if (!currentUser) {
+              window.location.href = 'index.html';
+              return;
+          }
+
+          // Update UI with user data
+          document.querySelector('.greeting').textContent = Hello, ${currentUser.firstName}!;
+          document.querySelector('.account-number').textContent = currentUser.accountNumber;
+          document.querySelector('.balance-amount').textContent = ₦ ${currentUser.balance.toLocaleString()};
+
+          // Update account dropdown with user's actual account
+          const accountDropdown = document.getElementById('accountsDropdown');
+          if (accountDropdown) {
+              accountDropdown.innerHTML = `
+                  <div class="account-item" data-account="${currentUser.accountNumber}" data-type="Current">
+                      <div class="account-number">${currentUser.accountNumber}</div>
+                      <div class="account-type">Current Account</div>
+                  </div>
+              `;
+          }
+
+          // Toggle balance visibility
+          const visibilityToggle = document.getElementById('visibilityToggle');
+          const balanceAmount = document.getElementById('balanceAmount');
+          let balanceVisible = true;
+
+          visibilityToggle.addEventListener('click', function() {
+              balanceVisible = !balanceVisible;
+              if (balanceVisible) {
+                  balanceAmount.textContent = ₦ ${currentUser.balance.toLocaleString()};
+                  visibilityToggle.innerHTML = '<i class="fas fa-eye"></i>';
+              } else {
+                  balanceAmount.textContent = '₦ ••••••';
+                  visibilityToggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
+              }
+          });
+
+          // Toggle account number visibility
+          const accountVisibilityToggle = document.getElementById('accountVisibilityToggle');
+          const accountNumberElement = document.querySelector('.account-number');
+          let accountVisible = true;
+
+          accountVisibilityToggle.addEventListener('click', function(e) {
+              e.stopPropagation(); // Prevent triggering account dropdown
+              accountVisible = !accountVisible;
+              if (accountVisible) {
+                  accountNumberElement.textContent = currentUser.accountNumber;
+                  accountVisibilityToggle.innerHTML = '<i class="fas fa-eye"></i>';
+              } else {
+                  accountNumberElement.textContent = '••••••••••';
+                  accountVisibilityToggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
+              }
+          });
+
+          // Account dropdown functionality
+          const accountSelector = document.getElementById('accountSelector');
+          const accountsDropdown = document.getElementById('accountsDropdown');
+
+          if (accountSelector && accountsDropdown) {
+              accountSelector.addEventListener('click', function() {
+                  accountsDropdown.classList.toggle('show');
+              });
+          }
+
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function(e) {
+              if (accountsDropdown && accountSelector &&
+                  !accountSelector.contains(e.target) &&
+                  !accountsDropdown.contains(e.target)) {
+                  accountsDropdown.classList.remove('show');
+              }
+          });
+      });
+
+      // Logout functionality
+      function logout() {
+          // Clear user session
+          localStorage.removeItem('currentUser');
+
+          // Redirect to onboarding page
+          window.location.href = 'index.html';
+      }
+    </script>
+  </body>
+</html>

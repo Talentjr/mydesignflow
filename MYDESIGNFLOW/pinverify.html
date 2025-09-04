@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIN Verification - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      .pin-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .pin-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 15px 0 5px;
+      }
+
+      .form-container {
+        padding: 30px 25px;
+        text-align: center;
+      }
+
+      .instruction {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #666;
+        font-size: 16px;
+      }
+
+      .pin-inputs {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .pin-input {
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        transition: all 0.3s;
+      }
+
+      .pin-input:focus {
+        border-color: #2b77d8;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(43, 119, 216, 0.2);
+      }
+
+      .continue-btn {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 20px;
+      }
+
+      .continue-btn:active {
+        background: #1a5bb5;
+      }
+
+      /* Status Page Styles */
+      .status-container {
+        padding: 50px 25px;
+        text-align: center;
+      }
+
+      .status-icon {
+        font-size: 80px;
+        color: #27ae60;
+        margin-bottom: 25px;
+      }
+
+      .status-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #27ae60;
+      }
+
+      .status-message {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 40px;
+      }
+
+      .home-btn {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+      }
+
+      .home-btn:active {
+        background: #1a5bb5;
+      }
+
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .key {
+        padding: 15px;
+        text-align: center;
+        background: #f5f7fa;
+        border-radius: 10px;
+        font-size: 24px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        user-select: none;
+      }
+
+      .key:active {
+        background: #e0e6ed;
+      }
+
+      .key i {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- PIN Verification Page -->
+      <div id="pin-page">
+        <div class="pin-header">
+          <div class="back-button" onclick="location.href='transfers.html'">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+          <h1 class="pin-title">Transaction PIN</h1>
+          <p>Enter your 4-digit PIN to confirm</p>
+        </div>
+
+        <div class="form-container">
+          <p class="instruction">Please enter your 4-digit transaction PIN</p>
+
+          <div class="pin-inputs">
+            <input
+              type="password"
+              class="pin-input"
+              id="pin1"
+              maxlength="1"
+              inputmode="numeric"
+              pattern="[0-9]*"
+            />
+            <input
+              type="password"
+              class="pin-input"
+              id="pin2"
+              maxlength="1"
+              inputmode="numeric"
+              pattern="[0-9]*"
+            />
+            <input
+              type="password"
+              class="pin-input"
+              id="pin3"
+              maxlength="1"
+              inputmode="numeric"
+              pattern="[0-9]*"
+            />
+            <input
+              type="password"
+              class="pin-input"
+              id="pin4"
+              maxlength="1"
+              inputmode="numeric"
+              pattern="[0-9]*"
+            />
+          </div>
+
+          <button class="continue-btn" id="continueBtn">Continue</button>
+
+          <div class="keypad">
+            <div class="key" data-value="1">1</div>
+            <div class="key" data-value="2">2</div>
+            <div class="key" data-value="3">3</div>
+            <div class="key" data-value="4">4</div>
+            <div class="key" data-value="5">5</div>
+            <div class="key" data-value="6">6</div>
+            <div class="key" data-value="7">7</div>
+            <div class="key" data-value="8">8</div>
+            <div class="key" data-value="9">9</div>
+            <div class="key" data-value="clear">
+              <i class="fas fa-backspace"></i>
+            </div>
+            <div class="key" data-value="0">0</div>
+            <div class="key" data-value="done">OK</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Page (Initially Hidden) -->
+      <div id="status-page" style="display: none">
+        <div class="pin-header">
+          <h1 class="pin-title">Transaction Status</h1>
+        </div>
+
+        <div class="status-container">
+          <div class="status-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+
+          <h2 class="status-title">TRANSACTION SUCCESSFUL</h2>
+
+          <p class="status-message">
+            Your transaction has been processed successfully.
+          </p>
+
+          <button class="home-btn" onclick="location.href='homepage.html'">
+            Back to Home
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const pinInputs = document.querySelectorAll(".pin-input");
+        const keys = document.querySelectorAll(".key");
+        const continueBtn = document.getElementById("continueBtn");
+        const pinPage = document.getElementById("pin-page");
+        const statusPage = document.getElementById("status-page");
+        let currentInputIndex = 0;
+
+        // Focus first input initially
+        pinInputs[0].focus();
+
+        // Handle PIN input navigation
+        pinInputs.forEach((input, index) => {
+          input.addEventListener("input", function (e) {
+            if (e.target.value.length === 1) {
+              if (index < pinInputs.length - 1) {
+                pinInputs[index + 1].focus();
+              }
+            }
+
+            checkPIN();
+          });
+
+          input.addEventListener("keydown", function (e) {
+            if (e.key === "Backspace" && e.target.value === "" && index > 0) {
+              pinInputs[index - 1].focus();
+            }
+          });
+        });
+
+        // Handle keypad clicks
+        keys.forEach((key) => {
+          key.addEventListener("click", function () {
+            const value = this.getAttribute("data-value");
+
+            if (value === "clear") {
+              // Clear all inputs and focus first
+              pinInputs.forEach((input) => (input.value = ""));
+              pinInputs[0].focus();
+              currentInputIndex = 0;
+            } else if (value === "done") {
+              // Submit the form
+              verifyPIN();
+            } else if (!isNaN(value)) {
+              // Number key pressed
+              if (currentInputIndex < pinInputs.length) {
+                pinInputs[currentInputIndex].value = value;
+
+                if (currentInputIndex < pinInputs.length - 1) {
+                  currentInputIndex++;
+                  pinInputs[currentInputIndex].focus();
+                }
+              }
+
+              checkPIN();
+            }
+          });
+        });
+
+        // Check if PIN is complete
+        function checkPIN() {
+          let pin = "";
+          pinInputs.forEach((input) => {
+            pin += input.value;
+          });
+
+          if (pin.length === 4) {
+            continueBtn.disabled = false;
+            continueBtn.style.opacity = "1";
+          } else {
+            continueBtn.disabled = true;
+            continueBtn.style.opacity = "0.7";
+          }
+        }
+
+        // Verify PIN and redirect
+        function verifyPIN() {
+          let pin = "";
+          pinInputs.forEach((input) => {
+            pin += input.value;
+          });
+
+          if (pin.length === 4) {
+            // Any 4-digit PIN is accepted as requested
+            // Show status page
+            pinPage.style.display = "none";
+            statusPage.style.display = "block";
+          }
+        }
+
+        // Continue button click
+        continueBtn.addEventListener("click", verifyPIN);
+
+        // Initially disable continue button
+        continueBtn.disabled = true;
+        continueBtn.style.opacity = "0.7";
+      });
+    </script>
+  </body>
+</html>

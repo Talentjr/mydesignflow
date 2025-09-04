@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification - Banking App</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .otp-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+
+        color: white;
+
+        padding: 40px 20px 30px;
+
+        text-align: center;
+
+        border-radius: 0 0 20px 20px;
+      }
+
+      .otp-title {
+        font-size: 24px;
+
+        font-weight: 600;
+
+        margin: 15px 0 5px;
+      }
+
+      .otp-tabs {
+        display: flex;
+
+        justify-content: center;
+
+        margin: 20px 0 10px;
+
+        gap: 20px;
+      }
+
+      .otp-tab {
+        padding: 8px 15px;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, 0.2);
+
+        font-size: 14px;
+
+        cursor: pointer;
+      }
+
+      .otp-tab.active {
+        background: white;
+
+        color: #2b77d8;
+
+        font-weight: 500;
+      }
+
+      .instruction {
+        text-align: center;
+
+        margin-bottom: 30px;
+
+        color: #666;
+
+        font-size: 16px;
+      }
+
+      .otp-inputs {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 15px;
+
+        margin-bottom: 30px;
+      }
+
+      .otp-input {
+        width: 50px;
+
+        height: 60px;
+
+        text-align: center;
+
+        font-size: 24px;
+
+        font-weight: 600;
+
+        border: 2px solid #ddd;
+
+        border-radius: 10px;
+
+        transition: all 0.3s;
+      }
+
+      .otp-input:focus {
+        border-color: #2b77d8;
+
+        outline: none;
+
+        box-shadow: 0 0 0 2px rgba(43, 119, 216, 0.2);
+      }
+
+      .simulation-note {
+        text-align: center;
+
+        margin: 20px 0;
+
+        padding: 15px;
+
+        background: #e8f4ff;
+
+        border-radius: 10px;
+
+        color: #1a4f8e;
+
+        font-size: 14px;
+      }
+
+      .keypad {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 15px;
+
+        margin-top: 30px;
+      }
+
+      .key {
+        padding: 15px;
+
+        text-align: center;
+
+        background: #f5f7fa;
+
+        border-radius: 10px;
+
+        font-size: 24px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: background 0.2s;
+
+        user-select: none;
+      }
+
+      .key:active {
+        background: #e0e6ed;
+      }
+
+      .key-letters {
+        display: block;
+
+        font-size: 10px;
+
+        color: #888;
+
+        font-weight: normal;
+
+        margin-top: 5px;
+      }
+
+      .verify-btn {
+        background: #2b77d8;
+
+        color: white;
+
+        border: none;
+
+        padding: 16px;
+
+        border-radius: 10px;
+
+        font-weight: 600;
+
+        font-size: 16px;
+
+        cursor: pointer;
+
+        width: 100%;
+
+        transition: background 0.3s;
+
+        margin-top: 30px;
+      }
+
+      .verify-btn:active {
+        background: #1a5bb5;
+      }
+
+      .back-link {
+        text-align: center;
+
+        margin-top: 25px;
+
+        font-size: 15px;
+
+        color: #666;
+      }
+
+      .back-link a {
+        color: #2b77d8;
+
+        text-decoration: none;
+
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="otp-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-landmark"></i>
+          </div>
+          <span>GTWorld</span>
+        </div>
+        <h1 class="otp-title">Please enter the OTP sent to you</h1>
+        <div class="otp-tabs">
+          <div class="otp-tab active">From SMS</div>
+          <div class="otp-tab">Token</div>
+        </div>
+      </div>
+      <div class="form-container">
+        <p class="instruction">
+
+          Enter the 6-digit code we sent to +234 **********.
+        </p>
+        <div class="simulation-note">
+          For simulation purpose, please use <strong>000000</strong> as the OTP
+        </div>
+        <div class="otp-inputs">
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+          />
+        </div>
+        <div class="keypad">
+          <div class="key" data-value="1">1</div>
+          <div class="key" data-value="2">
+            2<span class="key-letters">ABC</span>
+          </div>
+          <div class="key" data-value="3">
+            3<span class="key-letters">DEF</span>
+          </div>
+          <div class="key" data-value="4">
+            4<span class="key-letters">GHI</span>
+          </div>
+          <div class="key" data-value="5">
+            5<span class="key-letters">JKL</span>
+          </div>
+          <div class="key" data-value="6">
+            6<span class="key-letters">MNO</span>
+          </div>
+          <div class="key" data-value="7">
+            7<span class="key-letters">PQRS</span>
+          </div>
+          <div class="key" data-value="8">
+            8<span class="key-letters">TUV</span>
+          </div>
+          <div class="key" data-value="9">
+            9<span class="key-letters">WXYZ</span>
+          </div>
+          <div class="key" data-value="clear">
+            <i class="fas fa-backspace"></i>
+          </div>
+          <div class="key" data-value="0">0</div>
+          <div class="key" data-value="done">OK</div>
+        </div>
+        <button class="verify-btn">Verify</button>
+        <div class="back-link">
+          <a href="index.html">← Back to sign up</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const otpInputs = document.querySelectorAll(".otp-input");
+
+        const keys = document.querySelectorAll(".key");
+
+        const verifyBtn = document.querySelector(".verify-btn");
+
+        let currentInputIndex = 0;
+
+        // Focus first input initially
+
+        otpInputs[0].focus();
+
+        // Handle OTP input navigation
+
+        otpInputs.forEach((input, index) => {
+          input.addEventListener("input", function (e) {
+            if (e.target.value.length === 1) {
+              if (index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+              }
+            }
+
+            checkOTP();
+          });
+
+          input.addEventListener("keydown", function (e) {
+            if (e.key === "Backspace" && e.target.value === "" && index > 0) {
+              otpInputs[index - 1].focus();
+            }
+          });
+        });
+
+        // Handle keypad clicks
+
+        keys.forEach((key) => {
+          key.addEventListener("click", function () {
+            const value = this.getAttribute("data-value");
+
+            if (value === "clear") {
+              // Clear all inputs and focus first
+
+              otpInputs.forEach((input) => (input.value = ""));
+
+              otpInputs[0].focus();
+
+              currentInputIndex = 0;
+            } else if (value === "done") {
+              // Submit the form
+
+              verifyOTP();
+            } else if (!isNaN(value)) {
+              // Number key pressed
+
+              if (currentInputIndex < otpInputs.length) {
+                otpInputs[currentInputIndex].value = value;
+
+                if (currentInputIndex < otpInputs.length - 1) {
+                  currentInputIndex++;
+
+                  otpInputs[currentInputIndex].focus();
+                }
+              }
+
+              checkOTP();
+            }
+          });
+        });
+
+        // Check if OTP is complete
+
+        function checkOTP() {
+          let otp = "";
+
+          otpInputs.forEach((input) => {
+            otp += input.value;
+          });
+
+          if (otp.length === 6) {
+            verifyBtn.disabled = false;
+
+            verifyBtn.style.opacity = "1";
+          } else {
+            verifyBtn.disabled = true;
+
+            verifyBtn.style.opacity = "0.7";
+          }
+        }
+
+        // Verify OTP and redirect
+
+        function verifyOTP() {
+          let otp = "";
+
+          otpInputs.forEach((input) => {
+            otp += input.value;
+          });
+
+          if (otp === "000000") {
+            // Redirect to homepage
+
+            window.location.href = "homepage.html";
+          } else {
+            alert("Invalid OTP. Please enter correct OTP");
+          }
+        }
+
+        // Verify button click
+
+        verifyBtn.addEventListener("click", verifyOTP);
+
+        // Initially disable verify button
+
+        verifyBtn.disabled = true;
+
+        verifyBtn.style.opacity = "0.7";
+      });
+    </script>
+  </body>
+</html>

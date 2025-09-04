@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pension Account - Banking App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #f7f9fc;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+            color: white;
+            padding: 40px 20px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 25px;
+            left: 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 10px 0 5px;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        h1 {
+            font-size: 22px;
+            color: #1a4f8e;
+            margin-bottom: 15px;
+        }
+        
+        h2 {
+            font-size: 18px;
+            color: #1a4f8e;
+            margin: 20px 0 15px;
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #2b77d8, #1a4f8e);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .balance-amount {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .account-details {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .pin-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .performance-section {
+            background: #f8fafd;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .performance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .performance-title {
+            font-weight: 600;
+            color: #1a4f8e;
+        }
+        
+        .performance-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2b77d8;
+            margin-bottom: 10px;
+        }
+        
+        .performance-fund {
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .performance-time {
+            color: #888;
+            font-size: 13px;
+        }
+        
+        .transaction-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .transaction-date {
+            font-weight: 600;
+            color: #1a4f8e;
+        }
+        
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8fafd;
+            border-radius: 10px;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e8f0fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #2b77d8;
+        }
+        
+        .transaction-details {
+            flex: 1;
+        }
+        
+        .transaction-type {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .transaction-amount {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .transaction-time {
+            color: #888;
+            font-size: 12px;
+        }
+        
+        .disclaimer {
+            background: #f8fafd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="back-button" onclick="location.href='../homepage.html'">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <h1 class="header-title">Pension Account</h1>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h1>Total balance</h1>
+                
+                <div class="balance-card">
+                    <div class="balance-label">Your RSA Balance</div>
+                    <div class="balance-amount">••• units</div>
+                    
+                    <div class="account-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Type</div>
+                            <div class="detail-value">Retirement savings account (RSA)</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">PIN</div>
+                            <div class="detail-value">
+                                <button class="pin-button">
+                                    <i class="fas fa-comment"></i> PEN••23
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="performance-section">
+                    <div class="performance-header">
+                        <h2>Performance Composition</h2>
+                    </div>
+                    
+                    <div class="performance-value">Total balance</div>
+                    <div class="performance-fund">RSA FUND II - GUARANTY TRUST PEN...</div>
+                    <div class="performance-time">••• All time</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="transaction-section">
+                    <div class="transaction-header">
+                        <h2>Transaction history</h2>
+                        <div class="transaction-date">July 31, 2025</div>
+                    </div>
+                    
+                    <div class="transaction-list">
+                        <div class="transaction-item">
+                            <div class="transaction-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <div class="transaction-type">Contribution</div>
+                                <div class="transaction-amount">+₦25,000.00</div>
+                            </div>
+                            <div class="transaction-time">10:45 AM</div>
+                        </div>
+                        
+                        <div class="transaction-item">
+                            <div class="transaction-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <div class="transaction-type">Contribution</div>
+                                <div class="transaction-amount">+₦25,000.00</div>
+                            </div>
+                            <div class="transaction-time">09:30 AM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                Pension services Powered by Guaranty Trust Pension Managers Ltd, Licensed by the National Pension Commission (PenCom).
+            </div>
+        </div>
+        
+        <div class="footer">
+            GTBank Pension Services &copy; 2025
+        </div>
+    </div>
+</body>
+</html>

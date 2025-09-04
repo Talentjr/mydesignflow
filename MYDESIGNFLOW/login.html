@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .login-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .login-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 15px 0 5px;
+      }
+
+      .form-container {
+        padding: 30px 25px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #444;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .input-field:focus {
+        border-color: #2b77d8;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(43, 119, 216, 0.2);
+      }
+
+      .input-field.error {
+        border-color: #e74c3c;
+      }
+
+      .error-message {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .login-btn {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 10px;
+      }
+
+      .login-btn:active {
+        background: #1a5bb5;
+      }
+
+      .signup-link {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 15px;
+        color: #666;
+      }
+
+      .signup-link a {
+        color: #2b77d8;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .simulation-note {
+        text-align: center;
+        margin: 20px 0;
+        padding: 15px;
+        background: #e8f4ff;
+        border-radius: 10px;
+        color: #1a4f8e;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-header">
+        <div class="back-button" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-landmark"></i>
+          </div>
+          <span>GTWorld</span>
+        </div>
+        <h1 class="login-title">Welcome Back!</h1>
+      </div>
+
+      <div class="form-container">
+        <div class="simulation-note">
+          For simulation purpose, please use:<br />
+          - Any 10-digit account number<br />
+          - Password: <strong>000000</strong>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Account Number</label>
+          <input
+            type="text"
+            class="input-field"
+            id="accountNumber"
+            placeholder="Enter your 10-digit account number"
+            maxlength="10"
+            inputmode="numeric"
+          />
+          <div class="error-message" id="accountNumberError">
+            Account number must be 10 digits
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input
+            type="password"
+            class="input-field"
+            id="password"
+            placeholder="Enter your password"
+            maxlength="6"
+            inputmode="numeric"
+          />
+          <div class="error-message" id="passwordError">
+            Password must be 6 digits
+          </div>
+        </div>
+
+        <button class="login-btn" id="loginBtn">Login</button>
+
+        <div class="signup-link">
+          Don't have an account? <a href="index.html">Sign Up</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginBtn = document.getElementById("loginBtn");
+    const accountNumberInput = document.getElementById("accountNumber");
+    const passwordInput = document.getElementById("password");
+    const accountNumberError = document.getElementById("accountNumberError");
+    const passwordError = document.getElementById("passwordError");
+    
+    // Check if user is already logged in
+    checkLoginStatus();
+    
+    // Only allow numbers in account number field
+    accountNumberInput.addEventListener("input", function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '');
+      validateForm();
+    });
+    
+    // Only allow numbers in password field
+    passwordInput.addEventListener("input", function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '');
+      validateForm();
+    });
+    
+    // Check if user is already logged in
+    function checkLoginStatus() {
+      const currentUser = localStorage.getItem('currentUser');
+      if (currentUser) {
+        window.location.href = 'homepage.html';
+      }
+    }
+    
+    // Real-time form validation
+    function validateForm() {
+      const accountNumber = accountNumberInput.value;
+      const password = passwordInput.value;
+      
+      // Validate account number
+      if (accountNumber.length > 0 && accountNumber.length !== 10) {
+        accountNumberInput.classList.add("error");
+        accountNumberError.style.display = "block";
+      } else {
+        accountNumberInput.classList.remove("error");
+        accountNumberError.style.display = "none";
+      }
+      
+      // Validate password
+      if (password.length > 0 && password.length !== 6) {
+        passwordInput.classList.add("error");
+        passwordError.style.display = "block";
+      } else {
+        passwordInput.classList.remove("error");
+        passwordError.style.display = "none";
+      }
+    }
+    
+    // Login button validation
+    loginBtn.addEventListener("click", function () {
+      const accountNumber = accountNumberInput.value;
+      const password = passwordInput.value;
+      
+      // Simple validation
+      if (!accountNumber || !password) {
+        alert("Please fill in all fields");
+        return;
+      }
+      
+      // Account number validation
+      if (accountNumber.length !== 10) {
+        alert("Account number must be exactly 10 digits");
+        accountNumberInput.classList.add("error");
+        accountNumberError.style.display = "block";
+        return;
+      }
+      
+      // Get users from localStorage
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.accountNumber === accountNumber && u.password === password);
+      
+      if (!user) {
+        alert("Invalid account number or password");
+        passwordInput.classList.add("error");
+        passwordError.style.display = "block";
+        return;
+      }
+      
+      // Set as current user
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      
+      // If validation passes, proceed to homepage
+      window.location.href = 'homepage.html';
+    });
+    
+    // Allow Enter key to submit form
+    passwordInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        loginBtn.click();
+      }
+    });
+  });
+  
+  function goBack() {
+    // Go back to the previous page
+    window.history.back();
+  }
+</script>
+  </body>
+</html>

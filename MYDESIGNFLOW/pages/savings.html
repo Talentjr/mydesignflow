@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Savings Report - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 20px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .header-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 10px 0 5px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .section {
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        font-size: 22px;
+        color: #1a4f8e;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 18px;
+        color: #1a4f8e;
+        margin: 20px 0 15px;
+      }
+
+      .date {
+        color: #666;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      .description {
+        color: #555;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        background-color: #f5f8fc;
+        font-weight: 600;
+        color: #1a4f8e;
+      }
+
+      .highlight {
+        font-weight: bold;
+        color: #1a4f8e;
+      }
+
+      .positive {
+        color: #28a745;
+        font-weight: 600;
+      }
+
+      .stats-box {
+        background: #f8fafd;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-left: 4px solid #2b77d8;
+      }
+
+      .stats-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #1a4f8e;
+      }
+
+      .breakdown-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .breakdown-table th {
+        background-color: #e8f0fe;
+      }
+
+      .breakdown-table th,
+      .breakdown-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #e0e7ff;
+      }
+
+      .chart-container {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+      }
+
+      .chart {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: conic-gradient(#2b77d8 100%, #e8f0fe 0%);
+        margin-right: 20px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chart-inner {
+        position: absolute;
+        width: 70%;
+        height: 70%;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #1a4f8e;
+      }
+
+      .chart-labels {
+        flex: 1;
+      }
+
+      .chart-label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .color-box {
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+
+      .color-GTWealth {
+        background: #2b77d8;
+      }
+
+      .ranking-section {
+        background: linear-gradient(to bottom, #e8f0fe, #f8fafd);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 25px 0;
+      }
+
+      .ranking-title {
+        font-weight: 600;
+        color: #1a4f8e;
+        margin-bottom: 10px;
+      }
+
+      .ranking-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2b77d8;
+        margin-bottom: 15px;
+      }
+
+      .ranking-note {
+        color: #555;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .savings-options {
+        margin-top: 25px;
+      }
+
+      .savings-option {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #2b77d8;
+      }
+
+      .option-title {
+        font-weight: 600;
+        color: #1a4f8e;
+        margin-bottom: 5px;
+      }
+
+      .option-desc {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .option-rate {
+        color: #28a745;
+        font-weight: 600;
+      }
+
+      .back-button-bottom {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background: #2b77d8;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 20px;
+        transition: background 0.3s;
+      }
+
+      .back-button-bottom:hover {
+        background: #1a4f8e;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="back-button" onclick="location.href='../homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="header-title">Savings Report</h1>
+        <p class="date">Aug 2025</p>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <p class="description">
+            Here's a report of your saving activities for Aug 2025.
+          </p>
+
+          <table>
+            <tr>
+              <th>Total Saved Amount</th>
+              <th>Total Interest Earned</th>
+            </tr>
+            <tr>
+              <td class="highlight">
+                ₦198,982.00 <span class="positive">(+35% MoM)</span>
+              </td>
+              <td class="highlight">
+                ₦61.22 <span class="positive">(+78% MoM)</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>Statistics</h2>
+          <h3>Breakdown of your savings for this month (₦)</h3>
+
+          <table class="breakdown-table">
+            <tr>
+              <th>Product</th>
+              <th>Saved</th>
+              <th>Interest</th>
+              <th>Balance as at month end</th>
+            </tr>
+            <tr>
+              <td>GTWealth</td>
+              <td>198,982.00</td>
+              <td>61.22</td>
+              <td>7,013.24</td>
+            </tr>
+          </table>
+
+          <div class="chart-container">
+            <div class="chart">
+              <div class="chart-inner">100%</div>
+            </div>
+            <div class="chart-labels">
+              <div class="chart-label">
+                <div class="color-box color-GTWealth"></div>
+                <div>GTWealth</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-box">
+            <div class="stats-title">Balance</div>
+            <div class="highlight" style="font-size: 24px">₦7,013.24</div>
+          </div>
+        </div>
+
+        <div class="ranking-section">
+          <h2>My Ranking</h2>
+          <div class="ranking-value">1,000,000+</div>
+          <p class="ranking-note">
+            See our highest savings interest earners in GTBank.
+          </p>
+          <p class="ranking-note">
+            You are doing great! The more you save, the more interest you'll
+            earn. See more savings options on GTBank below:
+          </p>
+        </div>
+
+        <div class="savings-options">
+          <div class="savings-option">
+            <div class="option-title">Target Savings</div>
+            <div class="option-desc">
+              Save daily, weekly or monthly towards a target
+            </div>
+            <div class="option-rate">Up to 15% p.a.</div>
+          </div>
+
+          <div class="savings-option">
+            <div class="option-title">Fixed Savings</div>
+            <div class="option-desc">Lock funds and earn massive interest</div>
+            <div class="option-rate">Up to 18% p.a.</div>
+          </div>
+
+          <div class="savings-option">
+            <div class="option-title">Spend & Save Savings</div>
+            <div class="option-desc">Save as you spend or transfer</div>
+            <div class="option-rate">15% p.a.</div>
+          </div>
+
+          <div class="savings-option">
+            <div class="option-title">SafeBox Savings</div>
+            <div class="option-desc">
+              Strict daily, weekly or monthly automatic savings.
+            </div>
+            <div class="option-rate">Up to 15% p.a.</div>
+          </div>
+        </div>
+
+        <button
+          class="back-button-bottom"
+          onclick="location.href='../homepage.html'"
+        >
+          Back
+        </button>
+      </div>
+
+      <div class="footer">GTBank Banking &copy; 2025</div>
+    </div>
+  </body>
+</html>

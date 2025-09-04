@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Airtime - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      .airtime-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .airtime-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 15px 0 5px;
+      }
+
+      .form-container {
+        padding: 30px 25px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #444;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .input-field:focus {
+        border-color: #2b77d8;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(43, 119, 216, 0.2);
+      }
+
+      .input-field.error {
+        border-color: #e74c3c;
+      }
+
+      .error-message {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .amount-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .amount-btn {
+        padding: 12px;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #444;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+      }
+
+      .amount-btn:hover {
+        background: #e9ecef;
+      }
+
+      .amount-btn.selected {
+        background: #2b77d8;
+        color: white;
+        border-color: #2b77d8;
+      }
+
+      .custom-amount {
+        margin-top: 15px;
+      }
+
+      .buy-btn {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 20px;
+      }
+
+      .buy-btn:active {
+        background: #1a5bb5;
+      }
+
+      .network-selector {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .network-btn {
+        width: 70px;
+        height: 70px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .network-btn.selected {
+        border-color: #2b77d8;
+        background: #e8f0fe;
+      }
+
+      .network-icon {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      .network-name {
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .mtn {
+        color: #ffcc00;
+      }
+      .airtel {
+        color: #e60a2b;
+      }
+      .glo {
+        color: #00a859;
+      }
+      .etisalat {
+        color: #663399;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="airtime-header">
+        <div class="back-button" onclick="location.href='../homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="airtime-title">Buy Airtime</h1>
+        <p>Recharge any phone number instantly</p>
+      </div>
+
+      <div class="form-container">
+        <div class="network-selector">
+          <div class="network-btn" data-network="mtn">
+            <div class="network-icon mtn"><i class="fas fa-sim-card"></i></div>
+            <div class="network-name">MTN</div>
+          </div>
+          <div class="network-btn" data-network="airtel">
+            <div class="network-icon airtel">
+              <i class="fas fa-sim-card"></i>
+            </div>
+            <div class="network-name">Airtel</div>
+          </div>
+          <div class="network-btn" data-network="glo">
+            <div class="network-icon glo"><i class="fas fa-sim-card"></i></div>
+            <div class="network-name">Glo</div>
+          </div>
+          <div class="network-btn" data-network="9mobile">
+            <div class="network-icon etisalat">
+              <i class="fas fa-sim-card"></i>
+            </div>
+            <div class="network-name">9mobile</div>
+          </div>
+        </div>
+
+        <div class="form-container">
+    <div class="input-group">
+        <label class="input-label">Phone Number</label>
+        <input 
+            type="tel" 
+            class="input-field" 
+            id="phoneNumber" 
+            placeholder="Enter 11-digit phone number" 
+            maxlength="11"
+            inputmode="numeric"
+        />
+        <div class="error-message" id="phoneError">
+            Phone number must be 11 digits
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <label class="input-label">Select Amount (₦)</label>
+        <div class="amount-buttons">
+            <button class="amount-btn" data-amount="100">₦100</button>
+            <button class="amount-btn" data-amount="200">₦200</button>
+            <button class="amount-btn" data-amount="500">₦500</button>
+            <button class="amount-btn" data-amount="1000">₦1,000</button>
+        </div>
+        
+        <div class="custom-amount">
+            <input 
+                type="text" 
+                class="input-field" 
+                id="customAmount" 
+                placeholder="Or enter custom amount" 
+                inputmode="numeric"
+            />
+            <div class="error-message" id="amountError">
+                Please enter a valid amount
+            </div>
+        </div>
+    </div>
+    
+    <button class="continue-btn" onclick="location.href='pinverify.html'">Buy Airtime</button>
+</div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const phoneInput = document.getElementById('phoneNumber');
+          const customAmountInput = document.getElementById('customAmount');
+          const buyButton = document.getElementById('buyButton');
+          const amountButtons = document.querySelectorAll('.amount-btn');
+          const networkButtons = document.querySelectorAll('.network-btn');
+          let selectedAmount = null;
+          let selectedNetwork = null;
+
+          // Only allow numbers in phone field
+          phoneInput.addEventListener('input', function(e) {
+              e.target.value = e.target.value.replace(/\D/g, '');
+              validateForm();
+          });
+
+          // Only allow numbers in custom amount field
+          customAmountInput.addEventListener('input', function(e) {
+              e.target.value = e.target.value.replace(/\D/g, '');
+
+              // If user types a custom amount, deselect any button
+              if (e.target.value) {
+                  amountButtons.forEach(btn => btn.classList.remove('selected'));
+                  selectedAmount = e.target.value;
+              }
+
+              validateForm();
+          });
+
+          // Amount button selection
+          amountButtons.forEach(button => {
+              button.addEventListener('click', function() {
+                  // Deselect all buttons
+                  amountButtons.forEach(btn => btn.classList.remove('selected'));
+
+                  // Select clicked button
+                  this.classList.add('selected');
+
+                  // Clear custom amount
+                  customAmountInput.value = '';
+
+                  // Set selected amount
+                  selectedAmount = this.getAttribute('data-amount');
+
+                  validateForm();
+              });
+          });
+
+          // Network selection
+          networkButtons.forEach(button => {
+              button.addEventListener('click', function() {
+                  // Deselect all buttons
+                  networkButtons.forEach(btn => btn.classList.remove('selected'));
+
+                  // Select clicked button
+                  this.classList.add('selected');
+
+                  // Set selected network
+                  selectedNetwork = this.getAttribute('data-network');
+
+                  validateForm();
+              });
+          });
+
+          // Buy button action
+          buyButton.addEventListener('click', function() {
+              const phoneNumber = phoneInput.value;
+
+              if (!validateForm()) {
+                  return;
+              }
+
+              // Show success message
+              alert(Airtime purchase successful!\n\nPhone: ${phoneNumber}\nAmount: ₦${selectedAmount}\nNetwork: ${selectedNetwork.toUpperCase()});
+
+              // Redirect to ../homepage after 1 second
+              setTimeout(() => {
+                  window.location.href = '../homepage.html';
+              }, 1000);
+          });
+
+          // Form validation
+          function validateForm() {
+              const phoneNumber = phoneInput.value;
+              const phoneError = document.getElementById('phoneError');
+              const amountError = document.getElementById('amountError');
+              let isValid = true;
+
+              // Validate phone number
+              if (phoneNumber.length !== 11) {
+                  phoneInput.classList.add('error');
+                  phoneError.style.display = 'block';
+                  isValid = false;
+              } else {
+                  phoneInput.classList.remove('error');
+                  phoneError.style.display = 'none';
+              }
+
+              // Validate amount
+              if (!selectedAmount) {
+                  amountError.style.display = 'block';
+                  isValid = false;
+              } else {
+                  amountError.style.display = 'none';
+              }
+
+              // Validate network
+              if (!selectedNetwork) {
+                  isValid = false;
+              }
+
+              // Enable/disable buy button
+              buyButton.disabled = !isValid;
+              buyButton.style.opacity = isValid ? '1' : '0.7';
+
+              return isValid;
+          }
+
+          // Initialize form validation
+          validateForm();
+      });
+    </script>
+  </body>
+</html>

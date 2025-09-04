@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .policy-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .policy-content {
+        padding: 30px 25px;
+        min-height: 60vh;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .policy-text {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .return-button {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 20px;
+        display: block;
+        width: 200px;
+        margin: 30px auto;
+        transition: background 0.3s;
+      }
+
+      .return-button:hover {
+        background: #1a5bb5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="policy-header">
+        <div class="back-button" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1>Privacy Policy</h1>
+      </div>
+
+      <div class="policy-content">
+        <p class="policy-text">
+          Privacy policy content will be displayed here. This page is currently
+          empty as requested.
+        </p>
+        <p class="policy-text">
+          You can add your actual privacy policy content later when needed.
+        </p>
+
+        <button class="return-button" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i> Return Back
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function goBack() {
+        // Go back to the previous page
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

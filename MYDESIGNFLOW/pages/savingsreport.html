@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Savings Report - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .savings-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .savings-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 15px 0 5px;
+      }
+
+      .savings-container {
+        padding: 30px 25px;
+        text-align: center;
+      }
+
+      .savings-icon {
+        font-size: 70px;
+        color: #27ae60;
+        margin: 20px 0;
+        transform: perspective(500px) rotateY(20deg);
+        transition: transform 0.5s ease;
+      }
+
+      .savings-icon:hover {
+        transform: perspective(500px) rotateY(0deg);
+      }
+
+      .savings-amount {
+        font-size: 38px;
+        font-weight: 700;
+        color: #27ae60;
+        margin: 10px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .savings-date {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      .savings-detail {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 25px;
+        margin: 25px 0;
+        text-align: left;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+        transform: perspective(1000px) rotateX(5deg);
+        transition: transform 0.5s ease;
+      }
+
+      .savings-detail:hover {
+        transform: perspective(1000px) rotateX(0deg);
+      }
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .detail-row:last-child {
+        border-bottom: none;
+      }
+
+      .detail-label {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .detail-value {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .interest-badge {
+        background: #e8f5e9;
+        color: #27ae60;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 16px;
+        box-shadow: 0 5px 15px rgba(39, 174, 96, 0.2);
+      }
+
+      .action-button {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+        margin-top: 25px;
+      }
+
+      .action-button:active {
+        background: #1a5bb5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="savings-header">
+        <div class="back-button" onclick="location.href='finances.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="savings-title">Savings Report</h1>
+        <p>Your savings activity and growth</p>
+      </div>
+
+      <div class="savings-container">
+        <div class="savings-icon">
+          <i class="fas fa-piggy-bank"></i>
+        </div>
+
+        <div class="savings-amount">₦ 120,000.00</div>
+        <div class="savings-date">Saved on February 12, 2025</div>
+
+        <div class="savings-detail">
+          <div class="detail-row">
+            <span class="detail-label">Principal Amount:</span>
+            <span class="detail-value">₦ 115,419.25</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Interest Earned:</span>
+            <span class="detail-value">₦ 4,580.75</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Interest Rate:</span>
+            <span class="detail-value">4.0% per annum</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Duration:</span>
+            <span class="detail-value">90 days</span>
+          </div>
+        </div>
+
+        <div class="interest-badge">
+          <i class="fas fa-chart-line"></i> Interest Added: ₦ 4,580.75
+        </div>
+
+        <button class="action-button" onclick="location.href='finances.html'">
+          Back to Finances
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

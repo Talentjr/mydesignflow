@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Data - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      .data-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .data-plans {
+        padding: 20px;
+      }
+
+      .data-plan {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .data-amount {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2b77d8;
+      }
+
+      .data-price {
+        font-size: 16px;
+        color: #666;
+        margin-top: 5px;
+      }
+
+      .buy-btn {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="data-header">
+        <div class="back-button" onclick="location.href='../homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1>Buy Data</h1>
+      </div>
+
+      <div class="form-container">
+    <div class="input-group">
+        <label class="input-label">Phone Number</label>
+        <input type="tel" class="input-field" id="phoneNumber" placeholder="Enter 11-digit phone number" maxlength="11" inputmode="numeric">
+        <div class="error-message" id="phoneError">Phone number must be 11 digits</div>
+    </div>
+    
+    <div class="input-group">
+        <label class="input-label">Select Data Plan</label>
+        <select class="input-field" id="dataPlan">
+            <option value="">Choose a data plan</option>
+            <option value="100">100MB - ₦100</option>
+            <option value="500">500MB - ₦500</option>
+            <option value="1000">1GB - ₦1,000</option>
+            <option value="2000">2GB - ₦2,000</option>
+            <option value="5000">5GB - ₦5,000</option>
+        </select>
+    </div>
+
+
+        <button class="continue-btn" onclick="location.href='pinverify.html'">Buy Now</button>
+      </div>
+
+      <div class="data-plans">
+        <h3 class="section-title">Popular Data Plans</h3>
+
+        <div class="data-plan">
+          <div class="data-amount">1GB</div>
+          <div class="data-price">₦1,000 - 30 days</div>
+          <button class="buy-btn" onclick="selectPlan(1000)">Buy</button>
+        </div>
+
+        <div class="data-plan">
+          <div class="data-amount">2GB</div>
+          <div class="data-price">₦2,000 - 30 days</div>
+          <button class="buy-btn" onclick="selectPlan(2000)">Buy</button>
+        </div>
+
+        <div class="data-plan">
+          <div class="data-amount">5GB</div>
+          <div class="data-price">₦5,000 - 30 days</div>
+          <button class="buy-btn" onclick="selectPlan(5000)">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function selectPlan(amount) {
+          document.getElementById('dataPlan').value = amount;
+      }
+
+      function buyData() {
+          const phoneNumber = document.getElementById('phoneNumber').value;
+          const dataPlan = document.getElementById('dataPlan').value;
+
+          if (phoneNumber.length !== 11) {
+              alert('Please enter a valid 11-digit phone number');
+              return;
+          }
+
+          if (!dataPlan) {
+              alert('Please select a data plan');
+              return;
+          }
+
+          alert(Data purchase successful!\nPhone: ${phoneNumber}\nPlan: ${dataPlan}MB);
+          location.href = '../homepage.html';
+      }
+
+      // Validate phone number input
+      document.getElementById('phoneNumber').addEventListener('input', function(e) {
+          e.target.value = e.target.value.replace(/\D/g, '');
+      });
+    </script>
+  </body>
+</html>

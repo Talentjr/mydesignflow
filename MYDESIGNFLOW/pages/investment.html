@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investment Options - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f9ff 0%, #e8f0fe 100%);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 480px;
+        width: 100%;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1a4f8e 0%, #2b77d8 100%);
+        color: white;
+        padding: 40px 20px 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+        z-index: 10;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .header-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 10px 0 5px;
+      }
+
+      .header-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 25px 20px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        color: #1a4f8e;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .investment-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .investment-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #2b77d8;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .investment-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a4f8e;
+      }
+
+      .card-badge {
+        background: #e8f0fe;
+        color: #2b77d8;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .card-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .detail-item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .detail-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .detail-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .positive-change {
+        color: #28a745;
+        font-weight: 600;
+      }
+
+      .negative-change {
+        color: #dc3545;
+        font-weight: 600;
+      }
+
+      .card-footer {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-button {
+        background: #2b77d8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+        min-width: 120px;
+      }
+
+      .card-button:hover {
+        background: #1a4f8e;
+      }
+
+      .card-link {
+        color: #2b77d8;
+        font-size: 14px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .card-link i {
+        font-size: 12px;
+      }
+
+      .stats-container {
+        background: #f8fafd;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stats-title {
+        font-size: 18px;
+        color: #1a4f8e;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .stats-title i {
+        font-size: 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s;
+      }
+
+      .stat-item:hover {
+        transform: translateY(-3px);
+      }
+
+      .stat-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2b77d8;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        font-size: 14px;
+        border-top: 1px solid #eee;
+        background: #f8f9fa;
+      }
+
+      @media (max-width: 400px) {
+        .card-details {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card-footer {
+          flex-direction: column;
+          gap: 10px;
+          align-items: flex-start;
+        }
+
+        .card-button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="back-button" onclick="location.href='../homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="header-title">Investment Options</h1>
+        <p class="header-subtitle">
+          Grow your wealth with our diverse portfolio
+        </p>
+      </div>
+
+      <div class="content">
+        <h2 class="section-title">Your Investment Portfolio</h2>
+
+        <div class="stats-container">
+          <h3 class="stats-title">
+            <i class="fas fa-chart-pie"></i> Portfolio Summary
+          </h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value">₦4,582,350</div>
+              <div class="stat-label">Total Value</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value positive-change">+12.7%</div>
+              <div class="stat-label">YTD Return</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">$8,450</div>
+              <div class="stat-label">Dollar Assets</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">12</div>
+              <div class="stat-label">Total Holdings</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="investment-cards">
+          <div class="investment-card">
+            <div class="card-header">
+              <h3 class="card-title">Naira Funds</h3>
+              <span class="card-badge">Moderate Risk</span>
+            </div>
+            <div class="card-details">
+              <div class="detail-item">
+                <span class="detail-label">Current Value</span>
+                <span class="detail-value">₦2,145,800</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">YTD Return</span>
+                <span class="detail-value positive-change">+9.3%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Annual Yield</span>
+                <span class="detail-value">11.5%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Risk Level</span>
+                <span class="detail-value">Medium</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button
+                class="card-button"
+                onclick="handleInvestNow('Naira Funds')"
+              >
+                Invest Now
+              </button>
+              <a href="#" class="card-link"
+                >View Details <i class="fas fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="investment-card">
+            <div class="card-header">
+              <h3 class="card-title">NG Stocks</h3>
+              <span class="card-badge">High Risk</span>
+            </div>
+            <div class="card-details">
+              <div class="detail-item">
+                <span class="detail-label">Current Value</span>
+                <span class="detail-value">₦1,287,500</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">YTD Return</span>
+                <span class="detail-value positive-change">+15.8%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Dividend Yield</span>
+                <span class="detail-value">4.2%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Risk Level</span>
+                <span class="detail-value">High</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button
+                class="card-button"
+                onclick="handleInvestNow('NG Stocks')"
+              >
+                Invest Now
+              </button>
+              <a href="#" class="card-link"
+                >View Details <i class="fas fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="investment-card">
+            <div class="card-header">
+              <h3 class="card-title">Naira Mutual Funds</h3>
+              <span class="card-badge">Low Risk</span>
+            </div>
+            <div class="card-details">
+              <div class="detail-item">
+                <span class="detail-label">Current Value</span>
+                <span class="detail-value">₦758,250</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">YTD Return</span>
+                <span class="detail-value positive-change">+7.2%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Annual Yield</span>
+                <span class="detail-value">8.9%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Risk Level</span>
+                <span class="detail-value">Low</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button
+                class="card-button"
+                onclick="handleInvestNow('Naira Mutual Funds')"
+              >
+                Invest Now
+              </button>
+              <a href="#" class="card-link"
+                >View Details <i class="fas fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="investment-card">
+            <div class="card-header">
+              <h3 class="card-title">Dollar Mutual Funds</h3>
+              <span class="card-badge">Moderate Risk</span>
+            </div>
+            <div class="card-details">
+              <div class="detail-item">
+                <span class="detail-label">Current Value</span>
+                <span class="detail-value">$8,450</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">YTD Return</span>
+                <span class="detail-value positive-change">+12.4%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Annual Yield</span>
+                <span class="detail-value">10.2%</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Risk Level</span>
+                <span class="detail-value">Medium</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button
+                class="card-button"
+                onclick="handleInvestNow('Dollar Mutual Funds')"
+              >
+                Invest Now
+              </button>
+              <a href="#" class="card-link"
+                >View Details <i class="fas fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">GTBank Investment Services &copy; 2025</div>
+    </div>
+
+    <script>
+      // Function to handle Invest Now button clicks
+      function handleInvestNow(investmentType) {
+        // Redirect to NIP service page with investment account details
+        window.location.href =
+          "nipservice.html?account=0000000001&name=GTBank%20Investment%20Scheme&bank=GT%20Bank";
+      }
+    </script>
+  </body>
+</html>

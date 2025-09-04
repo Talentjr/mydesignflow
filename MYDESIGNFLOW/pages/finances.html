@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finances - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .finance-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+        z-index: 10;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .finance-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 15px 0 5px;
+      }
+
+      .finance-content {
+        padding: 25px 20px;
+        padding-bottom: 80px;
+      }
+
+      .card-3d {
+        background: linear-gradient(135deg, #2b77d8 0%, #1a4f8e 100%);
+        border-radius: 20px;
+        padding: 25px;
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 15px 35px rgba(41, 115, 214, 0.2);
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        transition: transform 0.5s ease;
+      }
+
+      .card-3d:hover {
+        transform: translateY(-5px) rotateX(5deg);
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .card-icon {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+
+      .card-amount {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .card-subtitle {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .finance-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .finance-box {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        transform-style: preserve-3d;
+        border: 1px solid #eaeaea;
+      }
+
+      .finance-box:hover {
+        transform: translateY(-5px) rotateY(5deg);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .finance-icon {
+        font-size: 28px;
+        color: #2b77d8;
+        margin-bottom: 12px;
+        background: #e8f0fe;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        transition: transform 0.3s ease;
+      }
+
+      .finance-box:hover .finance-icon {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      .finance-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .finance-desc {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .performance-chart {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 25px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+        transform: perspective(1000px) rotateX(5deg);
+        transition: transform 0.5s ease;
+      }
+
+      .performance-chart:hover {
+        transform: perspective(1000px) rotateX(0deg);
+      }
+
+      .chart-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #1a4f8e;
+        text-align: center;
+      }
+
+      .chart-bars {
+        display: flex;
+        align-items: flex-end;
+        height: 150px;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 15px;
+        justify-content: space-around;
+      }
+
+      .chart-bar {
+        width: 30px;
+        background: linear-gradient(to top, #2b77d8, #1a4f8e);
+        margin: 0 5px;
+        border-radius: 5px 5px 0 0;
+        position: relative;
+        transform: translateZ(20px);
+        transition: height 0.5s ease;
+      }
+
+      .chart-labels {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .chart-label {
+        flex: 1;
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+      }
+
+      /* Bottom Navigation */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        padding: 12px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        border-top: 1px solid #eee;
+        z-index: 200;
+      }
+
+      .nav-item {
+        text-align: center;
+        font-size: 13px;
+        color: #666;
+        cursor: pointer;
+        flex: 1;
+      }
+
+      .nav-item.active {
+        color: #2b77d8;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+
+      /* 3D Transformations for different boxes */
+      .finance-box:nth-child(1):hover {
+        transform: translateY(-5px) rotateY(5deg) rotateZ(-1deg);
+      }
+
+      .finance-box:nth-child(2):hover {
+        transform: translateY(-5px) rotateY(-5deg) rotateZ(1deg);
+      }
+
+      .finance-box:nth-child(3):hover {
+        transform: translateY(-5px) rotateX(5deg) rotateZ(-1deg);
+      }
+
+      .finance-box:nth-child(4):hover {
+        transform: translateY(-5px) rotateX(-5deg) rotateZ(1deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="finance-header">
+        <div class="back-button" onclick="location.href='../homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="finance-title">Finances</h1>
+        <p>Manage your investments and savings</p>
+      </div>
+
+      <div class="finance-content">
+        <div class="card-3d">
+          <div class="card-title">
+            <i class="fas fa-piggy-bank card-icon"></i>
+            Total Portfolio Value
+          </div>
+          <div class="card-amount">₦ 675,131.75</div>
+          <div class="card-subtitle">+2.3% this month</div>
+        </div>
+
+        <div class="finance-grid">
+          <div class="finance-box" onclick="location.href='investment.html'">
+            <div class="finance-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="finance-name">Investment</div>
+            <div class="finance-desc">₦ 89,430.20</div>
+          </div>
+
+          <div class="finance-box" onclick="location.href='pension.html'">
+            <div class="finance-icon">
+              <i class="fas fa-piggy-bank"></i>
+            </div>
+            <div class="finance-name">Pension</div>
+            <div class="finance-desc">₦ 452,120.80</div>
+          </div>
+
+          <div class="finance-box" onclick="location.href='savings.html'">
+            <div class="finance-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+            <div class="finance-name">Savings Report</div>
+            <div class="finance-desc">View details</div>
+          </div>
+
+          <div class="finance-box" onclick="location.href='quickloan.html'">
+            <div class="finance-icon">
+              <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <div class="finance-name">Loan Request</div>
+            <div class="finance-desc">Apply now</div>
+          </div>
+        </div>
+
+        <div class="performance-chart">
+          <div class="chart-title">Portfolio Performance</div>
+          <div class="chart-bars">
+            <div class="chart-bar" style="height: 40px"></div>
+            <div class="chart-bar" style="height: 60px"></div>
+            <div class="chart-bar" style="height: 30px"></div>
+            <div class="chart-bar" style="height: 80px"></div>
+            <div class="chart-bar" style="height: 50px"></div>
+            <div class="chart-bar" style="height: 70px"></div>
+            <div class="chart-bar" style="height: 90px"></div>
+          </div>
+          <div class="chart-labels">
+            <div class="chart-label">Mon</div>
+            <div class="chart-label">Tue</div>
+            <div class="chart-label">Wed</div>
+            <div class="chart-label">Thu</div>
+            <div class="chart-label">Fri</div>
+            <div class="chart-label">Sat</div>
+            <div class="chart-label">Sun</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="location.href='../homepage.html'">
+          <div class="nav-icon"><i class="fas fa-home"></i></div>
+          <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="location.href='digibot.html'">
+          <div class="nav-icon"><i class="fas fa-robot"></i></div>
+          <div>DigiBot</div>
+        </div>
+        <div class="nav-item" onclick="location.href='payments.html'">
+          <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+          <div>Payments</div>
+        </div>
+        <div class="nav-item" onclick="location.href='transfers.html'">
+          <div class="nav-icon"><i class="fas fa-exchange-alt"></i></div>
+          <div>Transfers</div>
+        </div>
+        <div class="nav-item active">
+          <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+          <div>Finances</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add 3D effect to chart bars on hover
+      document.addEventListener("DOMContentLoaded", function () {
+        const bars = document.querySelectorAll(".chart-bar");
+        bars.forEach((bar) => {
+          bar.addEventListener("mouseover", function () {
+            const currentHeight = parseInt(this.style.height);
+            this.style.height = currentHeight + 10 + "px";
+          });
+
+          bar.addEventListener("mouseout", function () {
+            const currentHeight = parseInt(this.style.height);
+            this.style.height = currentHeight - 10 + "px";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

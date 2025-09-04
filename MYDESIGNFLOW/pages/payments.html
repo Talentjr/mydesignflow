@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payments - Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background-color: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        min-height: 100vh;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      .payments-header {
+        background: linear-gradient(135deg, #1a4f8e, #2b77d8);
+        color: white;
+        padding: 40px 20px 20px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 25px;
+        left: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .payments-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 10px 0 5px;
+      }
+
+      .search-box {
+        padding: 15px;
+        background: white;
+        border-bottom: 1px solid #eee;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+
+      .payments-container {
+        padding: 10px 15px;
+        height: calc(100vh - 180px);
+        overflow-y: auto;
+      }
+
+      .category-section {
+        margin-bottom: 25px;
+      }
+
+      .category-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #1a4f8e;
+        padding-left: 5px;
+        border-left: 4px solid #2b77d8;
+      }
+
+      .payment-category {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        transition: background 0.2s;
+        cursor: pointer;
+      }
+
+      .payment-category:active {
+        background: #f0f2f5;
+      }
+
+      .payment-icon {
+        width: 40px;
+        height: 40px;
+        background: #e8f0fe;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: #2b77d8;
+        font-size: 18px;
+      }
+
+      .payment-name {
+        font-size: 16px;
+        font-weight: 500;
+        flex: 1;
+      }
+
+      .chevron-right {
+        color: #999;
+      }
+
+      /* Bottom Navigation */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        padding: 12px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        border-top: 1px solid #eee;
+        z-index: 200;
+      }
+
+      .nav-item {
+        text-align: center;
+        font-size: 13px;
+        color: #666;
+        cursor: pointer;
+        flex: 1;
+      }
+
+      .nav-item.active {
+        color: #2b77d8;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="payments-header">
+        <div class="back-button" onclick="location.href='homepage.html'">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <h1 class="payments-title">Payments</h1>
+        <p>Select a category to make payment</p>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search payments..."
+        />
+      </div>
+
+      <div class="payments-container">
+        <!-- Airtime & Data -->
+        <div class="category-section">
+          <h3 class="category-title">Airtime & Data</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="payment-name">Airtime Recharge</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div class="payment-category" onclick="location.href='buydata.html'">
+            <div class="payment-icon">
+              <i class="fas fa-wifi"></i>
+            </div>
+            <div class="payment-name">Data Purchase</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Internet Subscription -->
+        <div class="category-section">
+          <h3 class="category-title">Internet Subscription</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="payment-name">ISP Bills</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-broadcast-tower"></i>
+            </div>
+            <div class="payment-name">WiFi Services</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Utilities -->
+        <div class="category-section">
+          <h3 class="category-title">Utilities</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="payment-name">Electricity Bills</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-tint"></i>
+            </div>
+            <div class="payment-name">Water Bills</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-gas-pump"></i>
+            </div>
+            <div class="payment-name">Gas Bills</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cable TV -->
+        <div class="category-section">
+          <h3 class="category-title">Cable TV</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-tv"></i>
+            </div>
+            <div class="payment-name">DSTV</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-tv"></i>
+            </div>
+            <div class="payment-name">GOTV</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-tv"></i>
+            </div>
+            <div class="payment-name">Startimes</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Platforms -->
+        <div class="category-section">
+          <h3 class="category-title">Payment Platforms</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-money-check"></i>
+            </div>
+            <div class="payment-name">Remita</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-credit-card"></i>
+            </div>
+            <div class="payment-name">ePay</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="payment-name">Paydirect</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="category-section">
+          <h3 class="category-title">School Bodies</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="payment-name">University Fees</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-school"></i>
+            </div>
+            <div class="payment-name">School Fees</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="payment-name">Exam Bodies</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visa & Travel -->
+        <div class="category-section">
+          <h3 class="category-title">Visa & Travel</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-passport"></i>
+            </div>
+            <div class="payment-name">Visa Fees</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-plane"></i>
+            </div>
+            <div class="payment-name">Flight Tickets</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transportation -->
+        <div class="category-section">
+          <h3 class="category-title">Transportation</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-bus"></i>
+            </div>
+            <div class="payment-name">Bus Tickets</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-train"></i>
+            </div>
+            <div class="payment-name">Train Tickets</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-taxi"></i>
+            </div>
+            <div class="payment-name">Ride Hailing</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Insurance -->
+        <div class="category-section">
+          <h3 class="category-title">Insurance</h3>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="payment-name">Health Insurance</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-car"></i>
+            </div>
+            <div class="payment-name">Auto Insurance</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            class="payment-category"
+            onclick="location.href='buyairtime.html'"
+          >
+            <div class="payment-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="payment-name">Home Insurance</div>
+            <div class="chevron-right">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="location.href='homepage.html'">
+          <div class="nav-icon"><i class="fas fa-home"></i></div>
+          <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="location.href='digibot.html'">
+          <div class="nav-icon"><i class="fas fa-robot"></i></div>
+          <div>DigiBot</div>
+        </div>
+        <div class="nav-item active">
+          <div class="nav-icon"><i class="fas fa-credit-card"></i></div>
+          <div>Payments</div>
+        </div>
+        <div class="nav-item" onclick="location.href='transfers.html'">
+          <div class="nav-icon"><i class="fas fa-exchange-alt"></i></div>
+          <div>Transfers</div>
+        </div>
+        <div class="nav-item" onclick="location.href='finances.html'">
+          <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+          <div>Finances</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Simple search functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-input");
+        const paymentCategories =
+          document.querySelectorAll(".payment-category");
+
+        searchInput.addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+
+          paymentCategories.forEach((category) => {
+            const categoryName = category
+              .querySelector(".payment-name")
+              .textContent.toLowerCase();
+            if (categoryName.includes(searchTerm)) {
+              category.style.display = "flex";
+              // Highlight the parent section
+              category.closest(".category-section").style.display = "block";
+            } else {
+              category.style.display = "none";
+            }
+          });
+
+          // Hide empty category sections
+          document.querySelectorAll(".category-section").forEach((section) => {
+            const visibleItems = section.querySelectorAll(
+              '.payment-category[style="display: flex"]'
+            );
+            if (visibleItems.length === 0) {
+              section.style.display = "none";
+            } else {
+              section.style.display = "block";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
